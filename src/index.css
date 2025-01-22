@@ -90,7 +90,51 @@ textarea:not([rows]) {
 }
 
 /* MY CSS */
-.body {
+#wholePage {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+}
+
+#resume {
+  background-color: rgb(233, 233, 233);
+  margin: 0;
+  padding: 0;
+}
+
+.fullName {
+  font-size: 15px;
+}
+
+.personInfo {
+  font-size: 13px;
+}
+
+hr {
+  color: rgb(255, 255, 255);
+  border-color: black;
+  border-style: ins;
+  border-width: 1.5px;
+  margin-top: 0.3em;
+  margin-bottom: 0.2em;
+}
+
+div {
+  padding: 0px;
+}
+body {
+  margin: 0px;
+}
+
+#education {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  max-width: 200px;
+}
+
+button {
+  max-width: 200px;
+  max-height: 100px;
 }

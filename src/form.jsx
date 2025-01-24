@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AddEducation from "./education";
 import "./index.css";
+import EducationSection from "./education.jsx";
 
 function UserInput({ form, onChange }) {
   return (
@@ -66,10 +67,10 @@ function UserInput({ form, onChange }) {
 function TopResume({ form }) {
   return (
     <div id="resumeTop">
-      <h2 class="fullName">
+      <h2 className="fullName">
         {form.firstName} {form.lastName}
       </h2>
-      <p class="personInfo">
+      <p className="personInfo">
         {form.city}, {form.state}, {form.postalCode} &#x2022; {form.phoneNumber}{" "}
         &#x2022; {form.email}
       </p>
@@ -79,14 +80,36 @@ function TopResume({ form }) {
   );
 }
 
-function MiddleResume({ form }) {
-  return <></>;
+function MiddleResume({ education }) {
+  return (
+    <div id="resumeMiddle">
+      <div id="educations">
+        <h2>Education</h2>
+        {education.map((education) => (
+          <div class="singleEducation">
+            <p>
+              <span class="left">{education.institution}</span>
+              <span class="right">
+                {education.city},{education.state}
+              </span>
+            </p>
+            <p>
+              <span class="left">{education.program}</span>
+              <span class="right">
+                {education.startDate} - {education.endDate}
+              </span>
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
-function DisplayResume({ form }) {
+function DisplayResume({ form, education }) {
   return (
     <div id="resume">
       <TopResume form={form} />
-      <MiddleResume form={form} />
+      <MiddleResume education={education} />
     </div>
   );
 }
@@ -103,16 +126,30 @@ function ShowInput() {
     email: "johnDoe@gmail.com",
   });
 
-  const [educationData, setEducationData] = useState({
-    institution: "York University",
-    program: "Arts",
-    city: "Toronto",
-    state: "ON",
-    startDate: "2022",
-    endDate: "TBD",
-  });
+  const [educationState, setEducationState] = useState([]);
+  const addEducations = () => {
+    setEducationState((prevState) => [
+      ...prevState,
+      {
+        id: Date.now(), // Generate a unique id
+        institution: "Waterloo",
+        program: "Dance",
+        city: "CA",
+        state: "LA",
+        startDate: "2020",
+        endDate: "2030",
+      },
+    ]);
+  };
 
-  const [showEducation, setEducationState] = useState(false);
+  // Handle changes to individual education fields
+  const handleEducationChange = (id, name, value) => {
+    setEducationState((prevState) =>
+      prevState.map((education) =>
+        education.id === id ? { ...education, [name]: value } : education
+      )
+    );
+  };
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -122,39 +159,21 @@ function ShowInput() {
       [name]: value,
     }));
   }
-  function handleEducationChange(e) {
-    const { name, value } = e.target;
-
-    setEducationData((educationData) => ({
-      ...educationData,
-      [name]: value,
-    }));
-  }
-
-  function showEducationForm() {
-    setEducationState(true);
-  }
-  function Test() {
-    return (
-      <>
-        <h1>test</h1>
-      </>
-    );
-  }
 
   return (
     <div id="wholePage">
-      <UserInput form={form} onChange={handleChange} />
-      <DisplayResume form={form} />
-      <button onClick={showEducationForm}>Add Education</button>
-      {showEducation && (
-        <AddEducation
-          educationData={educationData}
-          onChange={handleEducationChange}
+      <div className="leftSide">
+        <UserInput form={form} onChange={handleChange} />
+        <p>sdds</p>
+        <EducationSection
+          educationState={educationState}
+          addEducations={addEducations}
+          handleEducationChange={handleEducationChange}
         />
-      )}
-
-      <button onClick={Test}>sdsff4</button>
+      </div>
+      <div className="resume">
+        <DisplayResume form={form} education={educationState} />
+      </div>
     </div>
   );
 }

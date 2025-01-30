@@ -2,7 +2,7 @@ import { useState } from "react";
 import AddEducation from "./education";
 import "./index.css";
 import EducationSection from "./education.jsx";
-
+import WorkExperience from "./workexperience.jsx";
 function UserInput({ form, onChange }) {
   return (
     <>
@@ -86,19 +86,27 @@ function MiddleResume({ education }) {
       <div id="educations">
         <h2>Education</h2>
         {education.map((education) => (
-          <div class="singleEducation">
-            <p>
-              <span class="left">{education.institution}</span>
-              <span class="right">
-                {education.city},{education.state}
-              </span>
-            </p>
-            <p>
-              <span class="left">{education.program}</span>
-              <span class="right">
-                {education.startDate} - {education.endDate}
-              </span>
-            </p>
+          <div
+            className="informationBlock"
+            key={education.id}
+            id={education.id}
+          >
+            <div className="informationTitle">
+              <div className="leftTitle">
+                <p>{education.institution}</p>
+                <p>{education.program}</p>
+              </div>
+              <div className="rightTitle">
+                <p>
+                  {education.city},{education.state}
+                </p>
+                <p>
+                  {education.startDate}-{education.endDate}
+                </p>
+              </div>
+            </div>
+
+            {education.description}
           </div>
         ))}
       </div>
@@ -122,7 +130,7 @@ function ShowInput() {
     city: "Toronto",
     state: "ON",
     postalCode: "M9M 2K5",
-    phoneNumber: "647 742 7521",
+    phoneNumber: "6477427521",
     email: "johnDoe@gmail.com",
   });
 
@@ -138,6 +146,7 @@ function ShowInput() {
         state: "LA",
         startDate: "2020",
         endDate: "2030",
+        description: "Did a lot of dance",
       },
     ]);
   };
@@ -159,6 +168,11 @@ function ShowInput() {
       [name]: value,
     }));
   }
+  function handleDeleteEducation(e) {
+    const id = parseInt(e.target.id, 10); // Convert e.target.id to a number
+    const filtered = educationState.filter((education) => education.id !== id);
+    setEducationState(filtered);
+  }
 
   return (
     <div id="wholePage">
@@ -169,7 +183,9 @@ function ShowInput() {
           educationState={educationState}
           addEducations={addEducations}
           handleEducationChange={handleEducationChange}
+          deleteEducation={handleDeleteEducation}
         />
+        <WorkExperience />
       </div>
       <div className="resume">
         <DisplayResume form={form} education={educationState} />

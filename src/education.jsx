@@ -4,41 +4,10 @@ function EducationSection({
   educationState,
   addEducations,
   handleEducationChange,
+  deleteEducation,
 }) {
-  // const [educationState, setEducationState] = useState([]);
-
-  // const addEducations = () => {
-  //   setEducationState((prevState) => [
-  //     ...prevState,
-  //     {
-  //       id: Date.now(), // Generate a unique id
-  //       institution: "",
-  //       program: "",
-  //       city: "",
-  //       state: "",
-  //       startDate: "",
-  //       endDate: "",
-  //     },
-  //   ]);
-  // };
-
-  // // Handle changes to individual education fields
-  // const handleEducationChange = (id, name, value) => {
-  //   setEducationState((prevState) =>
-  //     prevState.map((education) =>
-  //       education.id === id ? { ...education, [name]: value } : education
-  //     )
-  //   );
-  // };
-
   return (
     <div>
-      {/* {educationState.map((education) => (
-        <div id="Education">
-          {education.institution} - {education.program}
-        </div>
-      ))} */}
-
       <button onClick={addEducations}>Add Education</button>
       <p>Total Education Fields: {educationState.length}</p>
       {educationState.map((education) => (
@@ -47,13 +16,14 @@ function EducationSection({
           id={education.id}
           education={education}
           onChange={handleEducationChange}
+          deleteEducation={deleteEducation}
         />
       ))}
     </div>
   );
 }
 
-function EducationForm({ id, education, onChange }) {
+function EducationForm({ id, education, onChange, deleteEducation }) {
   // Local handler to pass changes up to the parent
   const handleChange = (e) => {
     onChange(id, e.target.name, e.target.value);
@@ -110,7 +80,11 @@ function EducationForm({ id, education, onChange }) {
         education={education}
         onChange={handleChange}
       />
-      <button>Delete Education</button>
+      <label htmlFor="description">Description</label>
+      <textarea id={id} name="description" onChange={handleChange}></textarea>
+      <button id={id} onClick={deleteEducation} className="deleteEducation">
+        Delete Educations
+      </button>
       <br />
     </div>
   );

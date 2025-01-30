@@ -139,6 +139,10 @@ button {
   max-height: 100px;
 }
 
+.informationTitle {
+  display: flex;
+  justify-content: space-between;
+}
 .right {
   margin-right: auto;
 }

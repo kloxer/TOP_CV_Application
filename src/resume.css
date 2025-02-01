@@ -1,0 +1,54 @@
+hr {
+  color: rgb(255, 255, 255);
+  border-color: black;
+  border-style: ins;
+  border-width: 1.5px;
+  margin-top: 0.3em;
+  margin-bottom: 0.2em;
+}
+p {
+  margin: 0;
+}
+
+#resume {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: 30px 50px;
+  margin-top: 60px;
+}
+
+.fullName {
+  font-size: 30px;
+  text-align: center;
+}
+.personInfo {
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+.titleSection {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+.informationTitle {
+  justify-content: space-between;
+}
+.topPart {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.description {
+  margin-left: 30px;
+}
+
+.programTitle {
+  font-weight: bold;
+}
+
+p {
+  font-size: 19px;
+}
+
+.informationBlock {
+  margin-bottom: 20px;
+}

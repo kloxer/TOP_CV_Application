@@ -7,9 +7,10 @@ function EducationSection({
   deleteEducation,
 }) {
   return (
-    <div>
-      <button onClick={addEducations}>Add Education</button>
-      <p>Total Education Fields: {educationState.length}</p>
+    <>
+      <button className="addMore" onClick={addEducations}>
+        Add Education
+      </button>
       {educationState.map((education) => (
         <EducationForm
           key={education.id}
@@ -19,7 +20,7 @@ function EducationSection({
           deleteEducation={deleteEducation}
         />
       ))}
-    </div>
+    </>
   );
 }
 
@@ -30,7 +31,9 @@ function EducationForm({ id, education, onChange, deleteEducation }) {
   };
 
   return (
-    <div id={`education`}>
+    <div class={`userInfo`}>
+      <h2 class="fieldTitle">{education.institution}</h2>
+
       <CreateField
         id={id}
         type="text"
@@ -82,8 +85,8 @@ function EducationForm({ id, education, onChange, deleteEducation }) {
       />
       <label htmlFor="description">Description</label>
       <textarea id={id} name="description" onChange={handleChange}></textarea>
-      <button id={id} onClick={deleteEducation} className="deleteEducation">
-        Delete Educations
+      <button id={id} onClick={deleteEducation} className="deleteButton">
+        Delete
       </button>
       <br />
     </div>
@@ -93,8 +96,15 @@ function EducationForm({ id, education, onChange, deleteEducation }) {
 function CreateField({ id, type, name, text, education, onChange }) {
   return (
     <>
-      <label htmlFor={`${name}-${id}`}>{text}:</label>
-      <input id={`${name}-${id}`} type={type} name={name} onChange={onChange} />
+      <div class="labelInput">
+        <label htmlFor={`${name}-${id}`}>{text}:</label>
+        <input
+          id={`${name}-${id}`}
+          type={type}
+          name={name}
+          onChange={onChange}
+        />
+      </div>
     </>
   );
 }

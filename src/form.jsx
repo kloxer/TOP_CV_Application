@@ -3,11 +3,12 @@ import AddEducation from "./education";
 import "./index.css";
 import EducationSection from "./education.jsx";
 import WorkExperience from "./workexperience.jsx";
+import DisplayResume from "./resume.jsx";
 function UserInput({ form, onChange }) {
   return (
     <>
-      <div id="userInfo">
-        <form>
+      <div class="userInfo">
+        <div className="labelInput">
           <label htmlFor="firstName">First Name</label>
           <input
             value={form.firstName}
@@ -15,7 +16,9 @@ function UserInput({ form, onChange }) {
             name="firstName"
             onChange={onChange}
           />
+        </div>
 
+        <div className="labelInput">
           <label htmlFor="lastName">Last Name</label>
           <input
             type="text"
@@ -23,6 +26,8 @@ function UserInput({ form, onChange }) {
             onChange={onChange}
             value={form.lastName}
           />
+        </div>
+        <div className="labelInput">
           <label htmlFor="city">City</label>
           <input
             value={form.city}
@@ -30,6 +35,8 @@ function UserInput({ form, onChange }) {
             name="city"
             onChange={onChange}
           />
+        </div>
+        <div className="labelInput">
           <label htmlFor="state">State</label>
           <input
             value={form.state}
@@ -37,6 +44,8 @@ function UserInput({ form, onChange }) {
             name="state"
             onChange={onChange}
           />
+        </div>
+        <div className="labelInput">
           <label htmlFor="postalCode">Postal Code</label>
           <input
             value={form.postalCode}
@@ -44,6 +53,8 @@ function UserInput({ form, onChange }) {
             name="postalCode"
             onChange={onChange}
           />
+        </div>
+        <div className="labelInput">
           <label htmlFor="phoneNumber">Phone Number</label>
           <input
             value={form.phoneNumber}
@@ -51,6 +62,8 @@ function UserInput({ form, onChange }) {
             name="phoneNumber"
             onChange={onChange}
           />
+        </div>
+        <div className="labelInput">
           <label htmlFor="email">Email</label>
           <input
             value={form.email}
@@ -58,67 +71,9 @@ function UserInput({ form, onChange }) {
             name="email"
             onChange={onChange}
           />
-        </form>
+        </div>
       </div>
     </>
-  );
-}
-
-function TopResume({ form }) {
-  return (
-    <div id="resumeTop">
-      <h2 className="fullName">
-        {form.firstName} {form.lastName}
-      </h2>
-      <p className="personInfo">
-        {form.city}, {form.state}, {form.postalCode} &#x2022; {form.phoneNumber}{" "}
-        &#x2022; {form.email}
-      </p>
-      <hr />
-      <hr />
-    </div>
-  );
-}
-
-function MiddleResume({ education }) {
-  return (
-    <div id="resumeMiddle">
-      <div id="educations">
-        <h2>Education</h2>
-        {education.map((education) => (
-          <div
-            className="informationBlock"
-            key={education.id}
-            id={education.id}
-          >
-            <div className="informationTitle">
-              <div className="leftTitle">
-                <p>{education.institution}</p>
-                <p>{education.program}</p>
-              </div>
-              <div className="rightTitle">
-                <p>
-                  {education.city},{education.state}
-                </p>
-                <p>
-                  {education.startDate}-{education.endDate}
-                </p>
-              </div>
-            </div>
-
-            {education.description}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-function DisplayResume({ form, education }) {
-  return (
-    <div id="resume">
-      <TopResume form={form} />
-      <MiddleResume education={education} />
-    </div>
   );
 }
 
@@ -141,12 +96,12 @@ function ShowInput() {
       {
         id: Date.now(), // Generate a unique id
         institution: "Waterloo",
-        program: "Dance",
+        program: "Bachelor of Arts, Dance",
         city: "CA",
         state: "LA",
         startDate: "2020",
         endDate: "2030",
-        description: "Did a lot of dance",
+        description: "Courses: Dance1, Dance2, Dance3",
       },
     ]);
   };
@@ -174,21 +129,81 @@ function ShowInput() {
     setEducationState(filtered);
   }
 
+  //EXPERIENCE SECTION
+  const [jobs, setJobs] = useState([
+    {
+      id: Date.now(),
+      workplace: "Google",
+      position: "Web Developer",
+      city: "Toronto",
+      state: "ON",
+      startDate: "2020",
+      endDate: "2024",
+      description: "Handled Auth for youtube, increased efficiency by 200%",
+    },
+  ]);
+
+  function changeJobInfo(e) {
+    const changedJobInfo = jobs.map((job) => {
+      if (job.id == e.target.id) {
+        return {
+          ...job,
+          [e.target.name]: e.target.value,
+        };
+      } else {
+        return job;
+      }
+    });
+    setJobs(changedJobInfo);
+  }
+  function addWorkExperience() {
+    setJobs([
+      ...jobs,
+      {
+        id: Date.now(),
+        workplace: "",
+        position: "",
+        city: "",
+        state: "",
+        startDate: "",
+        endDate: "",
+        description: "",
+      },
+    ]);
+  }
+  function deleteExperience(e) {
+    setJobs(jobs.filter((job) => job.id != e.target.id));
+  }
+
   return (
     <div id="wholePage">
       <div className="leftSide">
+        <h1 className="formTitle">Personal Details</h1>
+
         <UserInput form={form} onChange={handleChange} />
-        <p>sdds</p>
+        <h1 className="formTitle">Education</h1>
+
         <EducationSection
           educationState={educationState}
           addEducations={addEducations}
           handleEducationChange={handleEducationChange}
           deleteEducation={handleDeleteEducation}
         />
-        <WorkExperience />
+        <h1 className="formTitle">Experience</h1>
+
+        <WorkExperience
+          jobs={jobs}
+          changeJobInfo={changeJobInfo}
+          addWorkExperience={addWorkExperience}
+          deleteExperience={deleteExperience}
+        />
       </div>
       <div className="resume">
-        <DisplayResume form={form} education={educationState} />
+        <DisplayResume
+          form={form}
+          education={educationState}
+          experience={jobs}
+        />
       </div>
     </div>
   );

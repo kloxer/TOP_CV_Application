@@ -1,59 +1,16 @@
 import { useState } from "react";
 
-function WorkExperience() {
-  const [jobs, setJobs] = useState([
-    {
-      id: Date.now(),
-      workplace: "Google",
-      position: "Web Developer",
-      city: "Toronto",
-      state: "ON",
-      startDate: "2020",
-      endDate: "2024",
-    },
-  ]);
-
-  function changeJobInfo(e) {
-    const changedJobInfo = jobs.map((job) => {
-      if (job.id == e.target.id) {
-        return {
-          ...job,
-          [e.target.name]: e.target.value,
-        };
-      } else {
-        return job;
-      }
-    });
-    setJobs(changedJobInfo);
-  }
-  function addWorkExperience() {
-    setJobs([
-      ...jobs,
-      {
-        id: Date.now(),
-        workplace: "e",
-        position: "e",
-        city: "",
-        state: "",
-        startDate: "",
-        endDate: "",
-      },
-    ]);
-  }
-  function deleteExperience(e) {
-    alert(e.target.id);
-    setJobs(jobs.filter((job) => job.id != e.target.id));
-  }
+function WorkExperience({
+  jobs,
+  changeJobInfo,
+  addWorkExperience,
+  deleteExperience,
+}) {
   return (
-    <div class="workExperience">
-      {jobs.map((job) => (
-        <div>
-          <p id={job.id}>{job.workplace}</p>
-          <p>{job.position}</p>
-        </div>
-      ))}
-      <h2>Experience </h2>
-      <button onClick={addWorkExperience}>Add work experience</button>
+    <>
+      <button className="addMore work" onClick={addWorkExperience}>
+        Add Experience
+      </button>
 
       {jobs.map((job) => (
         <ExperienceForm
@@ -61,33 +18,47 @@ function WorkExperience() {
           id={job.id}
           changeJobInfo={changeJobInfo}
           deleteExperience={deleteExperience}
+          job={job}
         />
       ))}
-    </div>
+    </>
   );
 }
-function ExperienceForm({ id, changeJobInfo, deleteExperience }) {
+function ExperienceForm({ id, changeJobInfo, deleteExperience, job }) {
   return (
-    <div class="workExperience" id={id}>
-      <label htmlFor="location">Workplace</label>
-      <input id={id} type="text" name="workplace" onChange={changeJobInfo} />
-      <label htmlFor="jobTitle">Position</label>
-      <input id={id} type="text" name="position" onChange={changeJobInfo} />
-      <label htmlFor="jobTitle">City</label>
-      <input type="text" name="city" />
-      <label htmlFor="jobTitle">State</label>
-      <input type="text" name="state" />
+    <div class="userInfo" id={id}>
+      <h2 class="fieldTitle">{job.workplace}</h2>
+      <div className="labelInput">
+        <label htmlFor="location">Workplace</label>
+        <input id={id} type="text" name="workplace" onChange={changeJobInfo} />
+      </div>
+      <div className="labelInput">
+        <label htmlFor="jobTitle">Position</label>
+        <input id={id} type="text" name="position" onChange={changeJobInfo} />
+      </div>
+      <div className="labelInput">
+        <label htmlFor="jobTitle">City</label>
+        <input id={id} type="text" name="city" onChange={changeJobInfo} />
+      </div>
+      <div className="labelInput">
+        <label htmlFor="jobTitle">State</label>
+        <input id={id} type="text" name="state" onChange={changeJobInfo} />
+      </div>
 
-      <label htmlFor="jobTitle">Start Date</label>
-      <input type="text" name="startDate" />
+      <div className="labelInput">
+        <label htmlFor="jobTitle">Start Date</label>
+        <input id={id} type="text" name="startDate" onChange={changeJobInfo} />
+      </div>
 
-      <label htmlFor="jobTitle">End Date</label>
-      <input type="text" name="endDate" />
+      <div className="labelInput">
+        <label htmlFor="jobTitle">End Date</label>
+        <input id={id} type="text" name="endDate" onChange={changeJobInfo} />
+      </div>
 
       <label htmlFor="description">Job Description</label>
-      <textarea name="description" id=""></textarea>
-      <button id={id} onClick={deleteExperience}>
-        delete info
+      <textarea name="description" id={id} onChange={changeJobInfo}></textarea>
+      <button className="deleteButton" id={id} onClick={deleteExperience}>
+        Delete
       </button>
       <hr></hr>
     </div>

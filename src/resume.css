@@ -10,10 +10,15 @@ p {
   margin: 0;
 }
 
+.resume {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 #resume {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  padding: 30px 50px;
-  margin-top: 60px;
+  padding: 20px 60px;
+  margin-top: 20px;
 }
 
 .fullName {
@@ -28,6 +33,7 @@ p {
 .titleSection {
   font-size: 24px;
   margin-bottom: 10px;
+  text-align: center;
 }
 .informationTitle {
   justify-content: space-between;
@@ -51,4 +57,15 @@ p {
 
 .informationBlock {
   margin-bottom: 20px;
+}
+
+.objective {
+  padding: 10px 0px;
+  text-align: center;
+}
+
+.download {
+  background-color: rgb(16, 0, 69);
+  margin-left: auto;
+  margin-right: auto;
 }

@@ -10,7 +10,8 @@ function TopResume({ form }) {
         &#x2022; {form.email}
       </p>
       <hr />
-      <hr />
+
+      <p class="objective">{form.description}</p>
     </div>
   );
 }
@@ -19,6 +20,8 @@ function MiddleResume({ education, jobs }) {
     <div id="resumeMiddle">
       <div id="infoSection">
         <h2 className="titleSection">Education</h2>
+        <hr></hr>
+
         {education.map((education) => (
           <div
             className="informationBlock"

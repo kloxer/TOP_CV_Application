@@ -4,6 +4,7 @@ import "./index.css";
 import EducationSection from "./education.jsx";
 import WorkExperience from "./workexperience.jsx";
 import DisplayResume from "./resume.jsx";
+import PdfDownloadComponent from "./pdfDownload.jsx";
 function UserInput({ form, onChange }) {
   return (
     <>
@@ -72,6 +73,16 @@ function UserInput({ form, onChange }) {
             onChange={onChange}
           />
         </div>
+
+        <div className="labelInput">
+          <label htmlFor="email">Objective</label>
+          <textarea
+            value={form.description}
+            type="text"
+            name="description"
+            onChange={onChange}
+          />
+        </div>
       </div>
     </>
   );
@@ -87,6 +98,8 @@ function ShowInput() {
     postalCode: "M9M 2K5",
     phoneNumber: "6477427521",
     email: "johnDoe@gmail.com",
+    description:
+      "Detail-oriented computer science graduate seeking an entry-level position to apply programming skills and contribute to innovative projects while gaining hands-on experience in a collaborative environment.",
   });
 
   const [educationState, setEducationState] = useState([]);
@@ -182,7 +195,6 @@ function ShowInput() {
 
         <UserInput form={form} onChange={handleChange} />
         <h1 className="formTitle">Education</h1>
-
         <EducationSection
           educationState={educationState}
           addEducations={addEducations}
@@ -199,6 +211,7 @@ function ShowInput() {
         />
       </div>
       <div className="resume">
+        <PdfDownloadComponent />
         <DisplayResume
           form={form}
           education={educationState}

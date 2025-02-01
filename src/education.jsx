@@ -31,8 +31,8 @@ function EducationForm({ id, education, onChange, deleteEducation }) {
   };
 
   return (
-    <div class={`userInfo`}>
-      <h2 class="fieldTitle">{education.institution}</h2>
+    <div className={`userInfo`}>
+      <h2 className="fieldTitle">{education.institution}</h2>
 
       <CreateField
         id={id}

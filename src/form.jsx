@@ -5,6 +5,7 @@ import EducationSection from "./education.jsx";
 import WorkExperience from "./workexperience.jsx";
 import DisplayResume from "./resume.jsx";
 import PdfDownloadComponent from "./pdfDownload.jsx";
+import AddSkills from "./skills.jsx"
 function UserInput({ form, onChange }) {
   return (
     <>
@@ -74,15 +75,13 @@ function UserInput({ form, onChange }) {
           />
         </div>
 
-        <div className="labelInput">
-          <label htmlFor="email">Objective</label>
+          <label htmlFor="objective">Objective</label>
           <textarea
             value={form.description}
             type="text"
             name="description"
             onChange={onChange}
           />
-        </div>
       </div>
     </>
   );
@@ -102,7 +101,16 @@ function ShowInput() {
       "Detail-oriented computer science graduate seeking an entry-level position to apply programming skills and contribute to innovative projects while gaining hands-on experience in a collaborative environment.",
   });
 
-  const [educationState, setEducationState] = useState([]);
+  const [educationState, setEducationState] = useState([{
+    id: Date.now(), // Generate a unique id
+        institution: "York University",
+        program: "M.SC in Computer Science",
+        city: "NY",
+        state: "NY",
+        startDate: "2014",
+        endDate: "2018",
+        description: "Courses: Advanced Algorithms, Databases",
+  }]);
   const addEducations = () => {
     setEducationState((prevState) => [
       ...prevState,
@@ -174,19 +182,55 @@ function ShowInput() {
       ...jobs,
       {
         id: Date.now(),
-        workplace: "",
-        position: "",
-        city: "",
-        state: "",
-        startDate: "",
-        endDate: "",
-        description: "",
+        workplace: "Microsoft",
+        position: "Software Engineer",
+        city: "Washington",
+        state: "WA",
+        startDate: "2014",
+        endDate: "2020",
+        description: "Increased sales by 100x",
       },
     ]);
   }
   function deleteExperience(e) {
     setJobs(jobs.filter((job) => job.id != e.target.id));
   }
+
+
+  // skills
+  const [skills, setSkills] = useState([{
+    id: Date.now(),
+    description: "Java",
+},
+])
+
+function changeSkills(e){
+    setSkills(skills.map(skill=> {
+        if (e.target.id == skill.id){
+            return {
+                ...skill,
+                [e.target.name]: e.target.value,
+            }
+        }
+        else{
+            return skill
+        }
+    }))
+}
+
+function deleteSkill(e){
+    setSkills(skills.filter(skill => skill.id != e.target.id));
+}
+
+function addSkills(){
+    setSkills(
+        [...skills,
+        {
+        id:Date.now(),
+        description:"Java",
+    }
+    ])
+}
 
   return (
     <div id="wholePage">
@@ -209,6 +253,11 @@ function ShowInput() {
           addWorkExperience={addWorkExperience}
           deleteExperience={deleteExperience}
         />
+        <AddSkills
+        skills={skills}
+        changeSkills={changeSkills}
+        deleteSkill={deleteSkill}
+        addSkills={addSkills}/>
       </div>
       <div className="resume">
         <PdfDownloadComponent />
@@ -216,6 +265,7 @@ function ShowInput() {
           form={form}
           education={educationState}
           experience={jobs}
+          skills={skills}
         />
       </div>
     </div>

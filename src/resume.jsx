@@ -15,7 +15,7 @@ function TopResume({ form }) {
     </div>
   );
 }
-function MiddleResume({ education, jobs }) {
+function MiddleResume({ education, jobs, skills }) {
   return (
     <div id="resumeMiddle">
       <div id="infoSection">
@@ -70,15 +70,41 @@ function MiddleResume({ education, jobs }) {
           </div>
         ))}
       </div>
+
+      <Skills skills={skills} />
     </div>
   );
 }
-function DisplayResume({ form, education, experience }) {
+function DisplayResume({ form, education, experience , skills}) {
   return (
     <div id="resume">
       <TopResume form={form} />
-      <MiddleResume education={education} jobs={experience} />
+      <MiddleResume education={education} jobs={experience} skills={skills} />
+      
     </div>
   );
 }
 export default DisplayResume;
+
+function Skills({skills}){
+
+  return <div>   
+
+            <h2 className="titleSection">Skills</h2>
+                <hr></hr>
+            <div className="informationBlock">
+            <p className="programTitle">Skills: {} 
+            {skills.map((skill,index) => (
+            <span key={skill.id}>
+              {skill.description}
+               {index < skills.length - 1 && ', '}
+              </span>
+        ))}
+            </p>
+            </div>
+           
+
+
+
+</div>
+}
